@@ -43,5 +43,4 @@ output = model.chat(
 
 # now let's get the output
 response = output['choices'][0]['message']['content']
-#print( output['choices'][0]['message'])
 print(response)
