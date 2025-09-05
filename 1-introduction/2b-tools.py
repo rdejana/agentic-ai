@@ -27,11 +27,8 @@ def get_weather(latitude, longitude):
     return data["current"]
 
 def call_function(name, args):
-    print(name)
     if name == "get_weather":
-        r = get_weather(**args)
-        print(r)
-        return r #get_weather(**args)
+        return get_weather(**args)
 
 
 tools = [
@@ -61,8 +58,11 @@ system_prompt = "You are a helpful weather assistant with access to specialized 
 def main():
     messages = [
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": "What's the temperature in Paris today?  I don't need the wind speed."},
+        {"role": "user", "content": "What's the temperature in Berlin today?  I don't need the wind speed."},
     ]
+
+    print("[user] -> ",messages[1]['content'])
+
 
     output = model.chat(
         messages=messages,
@@ -72,18 +72,17 @@ def main():
 
     response = output['choices'][0]['message']
 
-    print(response)
+    #print(response)
     tool_calls = response.get('tool_calls')
     if tool_calls is None:
         print("Unexpected result, please try again")
-        sys.exit(-1)
-    print(tool_calls)
+        return
+
     for tc in tool_calls:
         # add the response so that the LLM "links" the need to call the tool to the response
         messages.append(response)
         name = tc['function']['name']
         args = json.loads(tc['function']['arguments'])
-        print(name,args)
         result = call_function(name, args)
         # append the result
         messages.append(
@@ -96,11 +95,9 @@ def main():
         messages=messages,
         tools=tools,
         tool_choice_option="auto",
-       # tool_choice={"type": "function", "function": {"name": "get_weather"}},
-       # params=params,
     )
 
-    print(output['choices'][0]['message'])
+    print("[agent] -> ",output['choices'][0]['message']['content'])
 
 
 
