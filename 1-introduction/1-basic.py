@@ -15,7 +15,8 @@ credentials = Credentials(
     api_key=os.getenv("WX_API_KEY"),
 )
 
-model_id = "meta-llama/llama-3-2-90b-vision-instruct"
+#model_id = "meta-llama/llama-3-2-90b-vision-instruct"
+model_id = "meta-llama/llama-3-3-70b-instruct"
 
 params = TextChatParameters(
     max_tokens=1024,
@@ -35,7 +36,8 @@ output = model.chat(
         {"role": "system", "content": "Return your response as text"} ,
         {
             "role": "user",
-            "content": "Write a limerick about the Python programming language.",
+            #orginally a limerick, but how about a sonnet
+            "content": "Write a sonnet about the Python programming language.",
         },
     ],
     params=params
