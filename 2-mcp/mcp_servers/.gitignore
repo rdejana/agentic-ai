@@ -1,1 +1,5 @@
 ./.idea
+
+./bin/*
+/.idea/mcp_servers.iml
+/.idea/modules.xml
