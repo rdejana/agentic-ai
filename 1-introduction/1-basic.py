@@ -6,29 +6,14 @@ from ibm_watsonx_ai.foundation_models.schema import TextChatParameters, TextGenP
 from ibm_watsonx_ai.foundation_models.schema import TextChatResponseFormat, TextChatResponseFormatType
 from ibm_watsonx_ai.foundation_models import ModelInference
 from dotenv import load_dotenv
+import common.watson
 
-load_dotenv()  #load
+from common.watson import load_chat_model
 
-project_id = os.getenv("WX_PROJECT_ID")
-credentials = Credentials(
-    url=os.getenv("WX_URL"),
-    api_key=os.getenv("WX_API_KEY"),
-)
 
-#model_id = "meta-llama/llama-3-2-90b-vision-instruct"
-model_id = "meta-llama/llama-3-3-70b-instruct"
-
-params = TextChatParameters(
-    max_tokens=1024,
-    temperature=1
-)
-
-model = ModelInference(
-    model_id=model_id,
-    credentials=credentials,
-    project_id=project_id,
-    params=params
-)
+model = load_chat_model()
+params = model.params # see if I really need this
+print(params)
 
 output = model.chat(
     messages=[
@@ -40,9 +25,10 @@ output = model.chat(
             "content": "Write a sonnet about the Python programming language.",
         },
     ],
-    params=params
+    #params=params
 )
 
 # now let's get the output
+print(output)
 response = output['choices'][0]['message']['content']
 print(response)
