@@ -2,3 +2,4 @@ requests
 python-dotenv
 ibm-watsonx-ai
 langchain_ibm>=0.3,<0.4
+mcp

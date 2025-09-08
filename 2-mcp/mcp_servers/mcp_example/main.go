@@ -38,7 +38,7 @@ func main() {
 	}, func(ctx context.Context, req *mcp.CallToolRequest, args args) (*mcp.CallToolResult, any, error) {
 		return &mcp.CallToolResult{
 			Content: []mcp.Content{
-				&mcp.TextContent{Text: "Hi " + args.Name},
+				&mcp.TextContent{Text: "Hi " + args.Name + "!"},
 			},
 		}, nil, nil
 	})
